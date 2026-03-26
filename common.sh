@@ -96,35 +96,27 @@ python_setup() {
 maven_setup() {
 
   print_heading "Install Maven"
-  dnf install maven -y
+  dnf install maven -y &>>$log_file
   status_check $?
 
   app_prerequisites
 
-  unzip /tmp/shipping.zip
-  status_check $?
-
-  print_heading ""
+  print_heading "Download Application Dependencies"
   cd /app
-  mvn clean package
-  mv target/shipping-1.0.jar shipping.jar
+  mvn clean package &>>$log_file
+  mv target/$app_name-1.0.jar $app_name.jar &>>$log_file
   status_check $?
 
-  print_heading ""
-  systemctl daemon-reload
-  systemctl enable shipping
-  systemctl start shipping
-  status_check $?
-
-  print_heading ""
-  dnf install mysql -y
+  print_heading "Install MySql Client"
+  dnf install mysql -y &>>$log_file
   status_check $?
 
   for sql_file in schema app-user master-data; do
-    mysql -h <mysql.sairamdevops.online> -uroot -pRoboShop@1 < /app/db/$sql_file.sql
+    print_heading "Load SQL File - $sql_file"
+    mysql -h <mysql.sairamdevops.online> -uroot -pRoboShop@1 < /app/db/$sql_file.sql &>>$log_file
+    status_check $?
   done
-  status_check $?
 
-  systemctl restart shipping
-  status_check $?
+  system_setup
+
 }
