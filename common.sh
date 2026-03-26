@@ -5,6 +5,8 @@ rm -f $log_file
 
 app_prerequisites() {
   print_heading "Add Application User"
+  id roboshop &>>$log_file
+  if [ $? -ne 0 ]; then
   useradd roboshop &>>$log_file
   status_check $?
 
