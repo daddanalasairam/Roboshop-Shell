@@ -35,5 +35,5 @@ status_check() {
     echo "SUCCESS"
   else
     echo "FAILURE"
-
+  fi
 }
