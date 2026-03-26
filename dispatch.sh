@@ -5,5 +5,6 @@ if [ -z "$1" ]; then
   echo Input Rabbitmq Password is missing
   exit 1
 fi
+RABBITMQ_PASSWORD=$1
 
 golang
