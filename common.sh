@@ -121,3 +121,21 @@ maven_setup() {
   system_setup
 
 }
+
+golang() {
+
+  print_heading "Install GoLang"
+  dnf install golang -y &>>$log_file
+  status_check $?
+
+  app_prerequisites
+
+  print_heading "Download Application Dependencies"
+  go mod init dispatch &>>$log_file
+  go get &>>$log_file
+  go build &>>$log_file
+  status_check $?
+
+  system_setup
+
+}
