@@ -2,6 +2,7 @@ color="\e[35m"
 no_color="\e[0m"
 log_file=/tmp/roboshop.log
 rm -f $log_file
+scripts_path=$(pwd)
 
 app_prerequisites() {
   print_heading "Add Application User"
@@ -39,4 +40,91 @@ status_check() {
     echo -e "\e[31m FAILURE \e[0m"
     exit 1
   fi
+}
+
+system_setup() {
+  print_heading "Copy the Service File"
+  cp $scripts_path/$app_name.service /etc/systemd/system/$app_name.service &>>$log_file
+  status_check $?
+
+  print_heading "Start the Application Service"
+  systemctl daemon-reload &>>$log_file
+  systemctl enable $app_name &>>$log_file
+  systemctl start $app_name &>>$log_file
+  status_check $?
+}
+
+nodejs_setup() {
+  print_heading "Disable Default NodeJS"
+  dnf module disable nodejs -y &>>$log_file
+  status_check $?
+
+  print_heading "Enable NoeJS 20"
+  dnf module enable nodejs:20 -y &>>$log_file
+  status_check $?
+
+  print_heading "Install NodeJS"
+  dnf install nodejs -y &>>$log_file
+  status_check $?
+
+  app_prerequisites
+
+  cd /app
+
+  print_heading "Install NodeJS Dependencies"
+  npm install &>>$log_file
+  status_check $?
+
+  system_setup
+}
+
+python_setup() {
+
+  print_heading "Install Python"
+  dnf install python3 gcc python3-devel -y &>>$log_file
+  status_check $?
+
+  app_prerequisites
+
+  print_heading "Download Application Dependencies"
+  pip3 install -r requirements.txt &>>$log_file
+  status_check $?
+
+ system_setup
+}
+
+maven_setup() {
+
+  print_heading "Install Maven"
+  dnf install maven -y
+  status_check $?
+
+  app_prerequisites
+
+  unzip /tmp/shipping.zip
+  status_check $?
+
+  print_heading ""
+  cd /app
+  mvn clean package
+  mv target/shipping-1.0.jar shipping.jar
+  status_check $?
+
+  print_heading ""
+  systemctl daemon-reload
+  systemctl enable shipping
+  systemctl start shipping
+  status_check $?
+
+  print_heading ""
+  dnf install mysql -y
+  status_check $?
+
+  for sql_file in schema app-user master-data; do
+    mysql -h <mysql.sairamdevops.online> -uroot -pRoboShop@1 < /app/db/$sql_file.sql
+  done
+  status_check $?
+
+  systemctl restart shipping
+  status_check $?
 }
