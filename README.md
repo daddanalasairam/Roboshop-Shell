@@ -1,14 +1,13 @@
-# 🚀 RoboShop Automation using Shell Scripting
+**RoboShop Automation using Shell Scripting**
 
-## 📌 Project Overview
-
-This project automates the setup of a complete **RoboShop microservices application** using **Shell Scripting**.
+**Project Overview**
+This project automates the setup of a complete RoboShop microservices application using Shell Scripting.
 
 The application consists of multiple services like frontend, backend APIs, databases, and messaging systems. Each service is provisioned and configured using reusable and modular shell scripts.
 
 ---
 
-## 🧠 Objective
+**Objective**
 
 * Automate manual server setup
 * Reduce human errors
@@ -17,8 +16,7 @@ The application consists of multiple services like frontend, backend APIs, datab
 
 ---
 
-## 🏗️ Architecture
-
+**Architecture**
 The project includes the following microservices:
 
 * Frontend (Nginx)
@@ -35,7 +33,7 @@ The project includes the following microservices:
 
 ---
 
-## ⚙️ Technologies Used
+**Technologies Used**
 
 * Linux (RHEL 9)
 * Shell Scripting (Bash)
@@ -46,7 +44,7 @@ The project includes the following microservices:
 
 ---
 
-## 📂 Project Structure
+**Project Structure**
 
 ```
 roboshop-shell/
@@ -70,14 +68,14 @@ roboshop-shell/
 
 ---
 
-## 🔥 Key Features
+**Key Features**
 
-### ✅ Modular Design
+**Modular Design**
 
 * Common logic written in `common.sh`
 * Reusable functions across all services
 
-### ✅ Logging
+**Logging**
 
 ```bash
 log_file=/tmp/roboshop.log
@@ -86,9 +84,7 @@ log_file=/tmp/roboshop.log
 * All outputs stored in log file
 * Helps in debugging
 
----
-
-### ✅ Status Check Function
+**Status Check Function**
 
 ```bash
 status_check() {
@@ -101,25 +97,19 @@ status_check() {
 }
 ```
 
----
-
-### ✅ Idempotent-like Behavior
+**Idempotent-like Behavior**
 
 * Checks before creating users
 * Cleans directories before deployment
 
----
-
-### ✅ Functions Used
+**Functions Used**
 
 * `print_heading` → display formatted output
 * `status_check` → validate command execution
 * `app_prerequisites` → common setup steps
 * `system_setup` → service configuration
 
----
-
-### ✅ Automation Techniques
+**Automation Techniques**
 
 * Loops (`for`) for repetitive tasks
 * Variables for dynamic values
@@ -128,8 +118,7 @@ status_check() {
 
 ---
 
-## 🔐 Handling Sensitive Data
-
+**Handling Sensitive Data**
 Passwords are passed as arguments:
 
 ```bash
@@ -142,7 +131,7 @@ Passwords are passed as arguments:
 
 ---
 
-## 📦 Example Execution
+**Example Execution**
 
 ```bash
 bash frontend.sh
@@ -152,21 +141,21 @@ bash catalogue.sh
 
 ---
 
-## 🧪 Troubleshooting
+**Troubleshooting**
 
-### Check logs
+**Check logs**
 
 ```bash
 cat /tmp/roboshop.log
 ```
 
-### Check service status
+**Check service status**
 
 ```bash
 systemctl status nginx
 ```
 
-### Check running processes
+**Check running processes**
 
 ```bash
 ps -ef | grep nginx
@@ -174,7 +163,7 @@ ps -ef | grep nginx
 
 ---
 
-## 📈 Real DevOps Practices Implemented
+**Real DevOps Practices Implemented**
 
 * Infrastructure automation
 * Service management using systemd
@@ -184,7 +173,7 @@ ps -ef | grep nginx
 
 ---
 
-## 🚀 Future Improvements
+**Future Improvements**
 
 * Convert scripts to Ansible playbooks
 * Implement CI/CD pipeline
@@ -193,12 +182,11 @@ ps -ef | grep nginx
 
 ---
 
-## 🎯 Conclusion
-
+**Conclusion**
 This project demonstrates how shell scripting can be used to automate the deployment of a real-world microservices application and forms the foundation for advanced DevOps tools like Ansible and Terraform.
 
 ---
 
-## 👨‍💻 Author
+**Author**
+Sairam - DevOps Learner
 
-Sairam - DevOps Learner 🚀
